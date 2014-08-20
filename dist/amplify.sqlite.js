@@ -1,4 +1,11 @@
-
+/**
+ * amplify.sqlite
+ * 
+ * Enable AmplifyJS requests cache using SQLite storage
+ * @version 1.0.1
+ * @author Timothy Wood @codearachnid
+ * @license GPL v3.0 Copyright © 2014, Timothy Wood & Imagine Simplicity
+ */
 amplify.sqlite = function(){
 	var self = this,
 		environment = null,
