@@ -1,7 +1,7 @@
 {
   "name": "amplify.sqlite",
   "description": "Cache AmplifyJS requests using SQLite storage",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "author": "Timothy Wood @codearachnid <tim@imaginesimplicity.com> (http://www.imaginesimplicity.com/)",
   "devDependencies": {
     "grunt": "~0.4.5",
