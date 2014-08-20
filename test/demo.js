@@ -7,7 +7,7 @@ var startDemo = function(){
 		type: "GET",
 		cache: {
 			type: "sqlite",
-			expires: 15000
+			expires: 15000 // store for 15 seconds
 		}
 	});
 
