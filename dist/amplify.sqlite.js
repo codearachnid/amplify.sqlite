@@ -425,11 +425,11 @@ amplify.request.cache.sqlite = function( resource, request, ajax, ampXHR ){
 
 	        var expiration = typeof resource.cache == 'object' ? Number( resource.cache.expires ) + Date.now() : 0; 
 	        amplify.sqlite.instance.put( cacheKey, data, expiration ).done(function(){
-				// if ( typeof expiration === "number" ) {
-				// 	setTimeout(function() {
-				// 		amplify.sqlite.instance.delete( cacheKey );
-				// 	}, expiration );
-				// }
+				if ( typeof resource.cache == 'object' && typeof resource.cache.expires == "number" && resource.cache.expires > 0 ) {
+					setTimeout(function() {
+						amplify.sqlite.instance.delete( cacheKey );
+					}, Number( resource.cache.expires ) );
+				}
 	        });
 	        ampXHRsuccess.apply( this, arguments );
 
