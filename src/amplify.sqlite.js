@@ -189,7 +189,7 @@ amplify.sqlite = function(){
 			'sql' : executeSQL
 			};
 
-		if( environment == null ){
+		if( environment == null && typeof window.openDatabase == 'function' ){
     		environment = window.openDatabase( config.db.name, config.db.version, config.db.display, config.db.size, initEnvironment );
 		    initEnvironment();
     	}
