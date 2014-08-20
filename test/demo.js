@@ -2,7 +2,7 @@
 var startDemo = function(){
 
 	amplify.request.define( "sqliteDemo", "ajax", {
-		url: "sample-data.json",
+		url: "data.json",
 		dataType: "json",
 		type: "GET",
 		cache: {
