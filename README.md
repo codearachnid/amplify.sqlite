@@ -10,4 +10,4 @@ Timothy Wood @[codearachnid](https://twitter.com/codearachnid) & [Imagine Simpli
 #### License
 
 GPL v3.0
-Copyright (C) 2014, Timothy Wood & Imagine Simplicity
+Copyright &copy; 2014, Timothy Wood & Imagine Simplicity
