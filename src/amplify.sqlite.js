@@ -1,4 +1,3 @@
-
 amplify.sqlite = function(){
 	var self = this,
 		environment = null,
@@ -397,60 +396,5 @@ amplify.sqlite = function(){
         for (var output = []; multiplier > 0; output[--multiplier] = input) { /* do nothing */ }
         return output.join('');
     }
-
-};
-
-// ensure the instance runs as a singleton to minimize memory usage since 
-// sqlite can only run on one thread in modern browsers
-amplify.sqlite.instance = new amplify.sqlite();
-
-// define custom caching approach for amplify when data is requested
-amplify.request.cache.sqlite = function( resource, request, ajax, ampXHR ){
-
-
-    // console.log('---------------------');
-    // console.log("resource",resource);
-    // console.log("request",request);
-    // console.log("ajax",ajax);
-    // console.log("ampXHR",ampXHR);
-    // console.log('---------------------');
-
-    
-    var cacheKey = amplify.request.cache._key( request.resourceId, ajax.cacheURL(), ajax.data );
-
-	if(  typeof request == 'object' && request.hasOwnProperty('getRemote') && request.getRemote == true ) {
-
-		var ampXHRsuccess = ampXHR.success;
-		ampXHR.success = function( data, status ) {
-
-	        var expiration = typeof resource.cache == 'object' ? Number( resource.cache.expires ) + Date.now() : 0; 
-	        amplify.sqlite.instance.put( cacheKey, data, expiration ).done(function(){
-				// if ( typeof expiration === "number" ) {
-				// 	setTimeout(function() {
-				// 		amplify.sqlite.instance.delete( cacheKey );
-				// 	}, expiration );
-				// }
-	        });
-	        ampXHRsuccess.apply( this, arguments );
-
-	    };
-
-	} else {
-
-		amplify.sqlite.instance.get( cacheKey ).done(function( dataFromCache ){
-
-			if( typeof dataFromCache == 'object' )
-				dataFromCache.fromCache = true;
-
-	        ampXHR.success( dataFromCache );
-
-		}).fail(function(error){
-
-			request.getRemote = true;
-			amplify.request(request);
-
-		});
-		return false;
-	}
 
 };
