@@ -1,4 +1,4 @@
-AmplifyJS.sqlite 1.0.0
+AmplifyJS.sqlite 1.0.1
 ==============
 
 AmplifyJS is a set of components for data management and application communication. This extension/plugin enables AmplifyJS requests cache using SQLite storage.
