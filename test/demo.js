@@ -7,15 +7,18 @@ var startDemo = function(){
 		type: "GET",
 		cache: {
 			type: "sqlite",
-			expires: 15000 // store for 15 seconds
+			expires: 15000 //900000
 		}
 	});
 
-	var el = document.getElementById("getData");
-	if (el.addEventListener) {
-		el.addEventListener("click", requestData, false);
+	var elementGet = document.getElementById("get");
+	var elementClear = document.getElementById("clear");
+	if (elementGet.addEventListener) {
+		elementGet.addEventListener("click", requestData, false);
+		elementClear.addEventListener("click", clearData, false);
 	} else {
-		el.attachEvent('onclick', requestData);
+		elementGet.attachEvent('onclick', requestData);
+		elementClear.addEventListener("click", clearData, false);
 	}  
 
 };
@@ -25,4 +28,10 @@ function requestData(){
 		console.log('---------------------');
 		console.log("sqliteDemo response",response);
 	});
+}
+
+function clearData(){
+	amplify.sqlite.instance.clear();
+	console.log('---------------------');
+	console.log("sqliteDemo flushed cache");
 }
