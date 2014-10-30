@@ -10,23 +10,26 @@ amplify.request.cache.sqlite = function(resource, request, ajax, ampXHR) {
 		ajax.data);
 	if (typeof request == 'object' && request.hasOwnProperty('getRemote') &&
 		request.getRemote == true) {
-		var ampXHRsuccess = ampXHR.success;
-		ampXHR.success = function(data, status) {
-			var expiration = typeof resource.cache == 'object' ? Number(
-				resource.cache.expires) + Date.now() : 0;
-			amplify.sqlite.instance.put(cacheKey, data, expiration).done(
-				function() {
-					if (typeof resource.cache == 'object' && typeof resource
-						.cache.expires == "number" && resource.cache
-						.expires > 0) {
-						setTimeout(function() {
-							amplify.sqlite.instance.delete(
-								cacheKey);
-						}, Number(resource.cache.expires));
-					}
-				});
-			ampXHRsuccess.apply(this, arguments);
-		};
+			
+		if( typeof resource.cache != "boolean" || resource.cache !== false ){
+			var ampXHRsuccess = ampXHR.success;
+			ampXHR.success = function(data, status) {
+				var expiration = typeof resource.cache == 'object' ? Number(
+					resource.cache.expires) + Date.now() : 0;
+				amplify.sqlite.instance.put(cacheKey, data, expiration).done(
+					function() {
+						if (typeof resource.cache == 'object' && typeof resource
+							.cache.expires == "number" && resource.cache
+							.expires > 0) {
+							setTimeout(function() {
+								amplify.sqlite.instance.delete(
+									cacheKey);
+							}, Number(resource.cache.expires));
+						}
+					});
+				ampXHRsuccess.apply(this, arguments);
+			};
+		}
 	} else {
 		amplify.sqlite.instance.get(cacheKey).done(function(dataFromCache) {
 			if (typeof dataFromCache == 'object') dataFromCache.fromCache =
